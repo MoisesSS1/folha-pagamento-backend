@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -7,7 +16,7 @@ exports.search_sheet = exports.save_sheet = exports.cal_sheet = void 0;
 //model
 const userModels_1 = __importDefault(require("../models/userModels"));
 //rota para calcular desconto
-const cal_sheet = async (req, res) => {
+const cal_sheet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { grossSalary, transport, snack, businessRegime } = req.body;
     //snack é o valor de desconto vr
     //utilizar express validator para validar os dados
@@ -97,54 +106,60 @@ const cal_sheet = async (req, res) => {
             return user;
         }
     }
-    const data = await calcDesc(grossSalary, transport, snack, businessRegime);
+    const data = yield calcDesc(grossSalary, transport, snack, businessRegime);
     return res.json(data);
-};
+});
 exports.cal_sheet = cal_sheet;
 //rota para salvar a folha de pagamento
-const save_sheet = async (req, res) => {
+const save_sheet = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    async function checkHash(data) {
-        try {
-            const checkdata = await userModels_1.default.findById(data._id);
-            if (checkdata) {
-                return res.status(404).json({ saveData, msg: "Hash já foi utilizada, use outro id para a folha de pagamento!" });
+    function checkHash(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const checkdata = yield userModels_1.default.findById(data._id);
+                if (checkdata) {
+                    return res.status(404).json({ saveData, msg: "Hash já foi utilizada, use outro id para a folha de pagamento!" });
+                }
+                else {
+                    saveData(data);
+                }
             }
-            else {
-                saveData(data);
+            catch (error) {
+                return res.status(404).json({ error: "Erro ao checar se hash já foi utilizada, tente novamente ou utilize outra hash." });
             }
-        }
-        catch (error) {
-            return res.status(404).json({ error: "Erro ao checar se hash já foi utilizada, tente novamente ou utilize outra hash." });
-        }
+        });
     }
-    async function saveData(data) {
-        try {
-            const saveData = await userModels_1.default.create(data);
-            return res.status(200).json({ saveData, msg: "Folha de pagamento salva!" });
-        }
-        catch (error) {
-            console.log(error);
-            return res.status(404).json({ msg: "Erro ao salvar o dado no banco, verifique se preencheu os dados corretamente!" });
-        }
+    function saveData(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const saveData = yield userModels_1.default.create(data);
+                return res.status(200).json({ saveData, msg: "Folha de pagamento salva!" });
+            }
+            catch (error) {
+                console.log(error);
+                return res.status(404).json({ msg: "Erro ao salvar o dado no banco, verifique se preencheu os dados corretamente!" });
+            }
+        });
     }
     checkHash(data);
-};
+});
 exports.save_sheet = save_sheet;
 //rota para buscar a folha
 const search_sheet = (req, res) => {
     const { _id } = req.body;
-    async function findSheet(_id) {
-        try {
-            const sheet = await userModels_1.default.findById(_id);
-            if (sheet === null) {
-                return res.status(404).json({ msg: "Hash não encontrada, verifique e tente novamente!" });
+    function findSheet(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const sheet = yield userModels_1.default.findById(_id);
+                if (sheet === null) {
+                    return res.status(404).json({ msg: "Hash não encontrada, verifique e tente novamente!" });
+                }
+                return res.status(200).json({ sheet });
             }
-            return res.status(200).json({ sheet });
-        }
-        catch (error) {
-            return res.status(404).json({ msg: "Erro ao buscar hash, verifique e tente novamente!" });
-        }
+            catch (error) {
+                return res.status(404).json({ msg: "Erro ao buscar hash, verifique e tente novamente!" });
+            }
+        });
     }
     findSheet(_id);
 };
