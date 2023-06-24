@@ -50,7 +50,15 @@ export const cal_sheet = async (req: Request, res: Response) => {
         var inss_sheet = 0;
         var transport_sheet = 0
         if (transport) {
-            transport_sheet = grossSalary * 0.06
+            const checkTransport = grossSalary * 0.06
+
+            if (checkTransport > 300) {
+                transport_sheet = 300
+            } else {
+                transport_sheet = checkTransport
+            }
+
+
         }
 
         if (grossSalary <= 1302) {
