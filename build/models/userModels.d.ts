@@ -1,0 +1,97 @@
+import mongoose from "../db/conn";
+declare const User: mongoose.Model<{
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+}, {}, {}, {}, mongoose.Document<unknown, {}, {
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+}> & Omit<{
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+} & Required<{
+    _id: string;
+}>, never>, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+}, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+}>> & Omit<mongoose.FlatRecord<{
+    _id: string;
+    salary: number;
+    inss_in_sheet: number;
+    transport: number;
+    snack: number;
+    vacation: number;
+    deci_3: number;
+    FGTS: number;
+    FGTS_prov: number;
+    deci_3_andOthers_prov: number;
+    inss_employer?: number | undefined;
+    sat?: number | undefined;
+    education_salary?: number | undefined;
+    incra_sesi_senai?: number | undefined;
+}> & Required<{
+    _id: string;
+}>, never>>>;
+export default User;
