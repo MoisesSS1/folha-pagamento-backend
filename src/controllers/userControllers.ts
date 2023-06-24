@@ -8,8 +8,8 @@ import * as interfacesUser from "../interfaces/folhaUser.interface"
 
 //rota para calcular desconto
 export const cal_sheet = async (req: Request, res: Response) => {
-    const { grossSalary, transport, snack, businessRegime } = req.body
-    //snack é o valor de desconto vr
+    let { grossSalary, transport, snack, businessRegime } = req.body
+
     //utilizar express validator para validar os dados
 
     function calcDesc(grossSalary: number, transport: number, snack: number, businessRegime: "simple" | "others") {
@@ -67,15 +67,15 @@ export const cal_sheet = async (req: Request, res: Response) => {
         if (businessRegime === "simple") {
             //calcular o desconto por cada tipo de encargo
             const user: interfacesUser.User_desc_simple = {
-                "salary": grossSalary,
-                "inss_in_sheet": inss_sheet,
-                "transport": transport_sheet,
-                "snack": grossSalary * snack,
-                "vacation": grossSalary * simpleAliquots.vacation,
-                "deci_3": grossSalary * simpleAliquots[13],
-                "FGTS": grossSalary * simpleAliquots.fgts,
-                "FGTS_prov": grossSalary * simpleAliquots.fgts_prov_,
-                "deci_3_andOthers_prov": grossSalary * simpleAliquots.prev_about_others
+                "salary": Number(grossSalary.toFixed(2)),
+                "inss_in_sheet": Number(inss_sheet.toFixed(2)),
+                "transport": Number(transport_sheet.toFixed(2)),
+                "snack": Number((grossSalary * snack).toFixed(2)),
+                "vacation": Number((grossSalary * simpleAliquots.vacation).toFixed(2)),
+                "deci_3": Number((grossSalary * simpleAliquots[13]).toFixed(2)),
+                "FGTS": Number((grossSalary * simpleAliquots.fgts).toFixed(2)),
+                "FGTS_prov": Number((grossSalary * simpleAliquots.fgts_prov_).toFixed(2)),
+                "deci_3_andOthers_prov": Number((grossSalary * simpleAliquots.prev_about_others).toFixed(2))
             }
             return user
         }
@@ -83,19 +83,19 @@ export const cal_sheet = async (req: Request, res: Response) => {
         if (businessRegime === "others") {
             //calcular o desconto por cada tipo de encargo
             const user: interfacesUser.User_desc_others = {
-                "salary": grossSalary,
-                "inss_in_sheet": inss_sheet,
-                "transport": transport_sheet,
-                "snack": grossSalary * snack,
-                "vacation": grossSalary * others_aliquots.vacation,
-                "deci_3": grossSalary * others_aliquots[13],
-                "FGTS": grossSalary * others_aliquots.fgts,
-                "FGTS_prov": grossSalary * others_aliquots.fgts_prov_,
-                "deci_3_andOthers_prov": grossSalary * others_aliquots.prev_about_others,
-                "inss_employer": grossSalary * others_aliquots.inss,
-                "sat": grossSalary * others_aliquots.sat,
-                "education_salary": grossSalary * others_aliquots.education_salary,
-                "incra_sesi_senai": grossSalary * others_aliquots.incra_senai_sesi_sebrae,
+                "salary": Number(grossSalary.toFixed(2)),
+                "inss_in_sheet": Number(inss_sheet.toFixed(2)),
+                "transport": Number(transport_sheet.toFixed(2)),
+                "snack": Number((grossSalary * snack).toFixed(2)),
+                "vacation": Number((grossSalary * simpleAliquots.vacation).toFixed(2)),
+                "deci_3": Number((grossSalary * simpleAliquots[13]).toFixed(2)),
+                "FGTS": Number((grossSalary * simpleAliquots.fgts).toFixed(2)),
+                "FGTS_prov": Number((grossSalary * simpleAliquots.fgts_prov_).toFixed(2)),
+                "deci_3_andOthers_prov": Number((grossSalary * simpleAliquots.prev_about_others).toFixed(2)),
+                "inss_employer": Number((grossSalary * others_aliquots.inss).toFixed(2)),
+                "sat": Number((grossSalary * others_aliquots.sat).toFixed(2)),
+                "education_salary": Number((grossSalary * others_aliquots.education_salary).toFixed(2)),
+                "incra_sesi_senai": Number((grossSalary * others_aliquots.incra_senai_sesi_sebrae).toFixed(2)),
             }
             return user
         }
